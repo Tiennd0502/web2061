@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+	<title>Tienndpd03947_lab1_web2601</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+	<style type="text/css">
+		#target{
+			width: 50px;
+			height: 50px;
+			background-color: #33691e;
+		}
+		#txtkeyup{
+			color: #ff0000;
+		}
+		.user_item{
+			cursor: pointer;
+			text-decoration: underline;
+			color: green;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<h3>Bài 1</h3>
+		<div id="target">
+		</div>
+		<h3>Bài 2</h3>
+		<div class="mb-3 mt-3 row">
+	    <div class="col-sm-3">
+	      <input type="text" class="form-control" id="keyup">
+	    </div>
+	    <div class="col-sm-9">
+	      <h3 id="txtkeyup"></h3>
+	    </div>
+	  </div>
+		<h3>Bài 3-4</h3>
+		<form class="mt-3" autocomplete="off">
+			<div class="mb-3 row">
+		    <label for="staticEmail" class="col-sm-2 col-form-label">Id</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" id="id">
+		    </div>
+		  </div>
+		  <div class="mb-3 row">
+		    <label for="inputName" class="col-sm-2 col-form-label">Name</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" id="name">
+		    </div>
+		  </div>
+		  <div class="mb-3 row">
+		    <label for="inputGender" class="col-sm-2 col-form-label">Gender</label>
+		    <div class="col-sm-10">
+		      <select class="form-select" id="gender">
+					  <option value="1" selected="selected">Male</option>
+					  <option value="2">Female</option>
+					</select>
+		    </div>
+		  </div>
+		  <div class="mb-3 row">
+		    <button type="button" class="btn btn-success ml-3" id='add-user'> Add</button>
+		  </div>
+		</form>
+		<ul id="list"></ul>
+		<h3>Bài 5</h3>
+		<form class="mt-3" autocomplete="off">
+			<div class="mb-3 row">
+		    <label for="staticEmail" class="col-sm-2 col-form-label">Date</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" id="date">
+		    </div>
+		  </div>
+		  <div class="mb-3 row">
+		    <label for="inputName" class="col-sm-2 col-form-label">Month</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" id="month">
+		    </div>
+		  </div>
+		  <div class="mb-3 row">
+		    <label for="inputGender" class="col-sm-2 col-form-label">Year</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" id="year">
+		    </div>
+		  </div>
+		  <div class="mb-3 row">
+		    <button type="button" class="btn btn-success ml-3" id='showdate'>Show date</button>
+		  </div>
+		</form>
+		<ul id="list-date">
+			
+		</ul>
+		<h3>Bài 6</h3>
+		<div id="showDay" class="user_item"></div>
+	</div>
+	<script type="text/javascript" src="https://momentjs.com/downloads/moment.js"></script>
+	<script type="text/javascript">
+		//bài 1
+		let target = document.getElementById('target');
+		target.onmouseover = function () {
+			this.style.backgroundColor= '#bf360c';
+		}
+		target.onmouseout = function () {
+			this.style.backgroundColor= '#33691e';
+		}
+		//bài 2
+		let keyup     = document.querySelector('#keyup');
+		let txtkeyup  = document.querySelector('#txtkeyup');
+		keyup.onkeyup = function() {
+			txtkeyup.textContent = this.value;	
+		};
+		// bài 3
+		let users = [
+									{ id: 1, name: 'James Smith', gender: 1},
+									{ id: 2, name: 'Isla Brown', gender: 2},
+									{ id: 3, name: 'Amelia Devices', gender: 2},
+									{ id: 4, name: 'Jacob Evans', gender: 1}
+								];
+		let list        = document.getElementById('list');
+		let listContent = ''; 
+		users.forEach(function(user, index, users) {
+			let gender = "Male";
+			if(user.gender == 2){
+				gender = "Female";
+			}
+			listContent += '<li class="user_item">'+ user.id +' - '+ user.name +' - '+ gender+'</li>'; 
+		});
+		list.innerHTML = listContent;
+		//  bài 4	
+		let addUser = document.getElementById('add-user');
+		addUser.onclick = function(){
+			let id = document.getElementById('id');
+			let name = document.getElementById('name');
+			let gender = document.getElementById('gender');
+			let object = {id:Number(id.value), name: name.value, gender:Number(gender.options[gender.selectedIndex].value)};
+			users.push(object);
+			let newuser = document.createElement('li');
+			newuser.setAttribute('class','user_item');
+			// console.log(id.value,name.value,gender.value);
+			newuser.textContent = id.value +' - '+ name.value +' - '+ gender.options[gender.selectedIndex].text ;
+			list.appendChild(newuser);
+			// console.log(users);
+		};
+		// Bài 5
+		let convertDate = document.getElementById('showdate');
+		let showDate = document.getElementById('list-date');
+ 		convertDate.onclick = function(){
+			let date      = document.getElementById('date').value;
+			let month     = document.getElementById('month').value;
+			let year      = document.getElementById('year').value;
+			let listsDate = [];
+			listsDate[0]    = moment(year + '-' + month + '-' + date).format('YYYY-MM-DD');
+			listsDate[1]    = moment(date + '/' + month + '/' + year,'DD/MM/YYYY').format('DD/MM/YYYY');
+			listsDate[2]    = moment(date + '.' + month + '.' + year,'DD.MM.YYYY').format('DD.MM.YYYY');
+			listsDate[3]    = moment(date + ', ' + month + ' ' + year,'DD, MMM YYYY').format('DD, MMM YYYY');
+			listsDate[4]    = moment(date + ', ' + month + ' ' + year,'DD, MMMM YYYY').format('DD, MMMM YYYY');
+			let contentDate = '';
+			listsDate.forEach(function(item, index, listsDate){
+				contentDate += '<li class="user_item"> <h3>'+ item + '<h3></li>';
+			});
+			showDate.innerHTML = contentDate;
+			// Bài 6
+			let getDay =  moment(date + '/' + month + '/' + year,'DD/MM/YYYY');
+			document.getElementById('showDay').textContent = getDay.format('dddd');
+		}
+		
+
+	</script>
+	
+
+</body>
+</html>

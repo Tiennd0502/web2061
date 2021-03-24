@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+	<title>Tienndpd03947_lab3_web2601</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+	<style type="text/css">
+		#target{
+			width: 50px;
+			height: 50px;
+			background-color: #33691e;
+		}
+		#txtkeyup{
+			color: #ff0000;
+		}
+		.user_item{
+			cursor: pointer;
+			/* text-decoration: underline; */
+			color: green;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<form action="" autocomplete="off">
+			<h3>Bài 2</h3>
+			<div class="mb-3 row">
+		    <label for="name" class="col-sm-2 col-form-label">Subject Name</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" id="name">
+		    </div>
+		  </div>
+		  <div class="mb-3 row">
+		    <label for="point" class="col-sm-2 col-form-label">Point</label>
+		    <div class="col-sm-10">
+		      <input type="number" min="0" class="form-control" id="point">
+		    </div>
+		  </div>
+		  <div class="mb-3 row">
+			  <button type="button" class="btn btn-success ml-3" id='add-subject'> Add</button>
+			</div>
+		</form>
+		
+		
+		<div class="ml-5">
+			<h2>Subject</h2>
+			<h3 id="student_name" class='user_item'></h3>
+			<h3 id="student_age" class='user_item'></h3>
+			<h3 id="student_address" class='user_item'></h3>
+			<ul id="subjects">
+				
+			</ul>
+		</div>
+		<h3>Bài 4</h3>
+		<form action="" autocomplete="on">
+			<div class="mb-3 row">
+		    <label for="name1" class="col-sm-2 col-form-label">1st Person Name</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" id="name1">
+		    </div>
+		  </div>
+		  <div class="mb-3 row">
+		    <label for="age1" class="col-sm-2 col-form-label">1st Person Age</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" id="age1">
+		    </div>
+		  </div>
+		  <div class="mb-3 row">
+		    <label for="address1" class="col-sm-2 col-form-label">1st Person Address</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" id="address1">
+		    </div>
+		  </div>
+		  <div class="mb-3 row">
+		    <label for="name2" class="col-sm-2 col-form-label">2st Person Name</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" id="name2">
+		    </div>
+		  </div>
+		  <div class="mb-3 row">
+		    <label for="age2" class="col-sm-2 col-form-label">2st Person Age</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" id="age2">
+		    </div>
+		  </div>
+		  <div class="mb-3 row">
+		    <label for="address2" class="col-sm-2 col-form-label">2st Person Address</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" id="address2">
+		    </div>
+		  </div>
+		  <div class="mb-3 row">
+			  <button type="button" class="btn btn-success ml-3" id='show-profile'>Show profile</button>
+			</div>
+			<div id="content-profile"></div>
+		</form>
+	<!-- <script type="text/javascript" src="https://momentjs.com/downloads/moment.js"></script> -->
+	<script type="text/javascript">
+		// Bài 1
+		function Student1(fullname, email, avatar, address, avgScore){
+			this.fullname    = fullname;
+			this.email       = email;
+			this.avatar      = avatar;
+			this.address     = address;
+			this.avgScore    = avgScore;
+			this.getAvgScore = function(){
+				return console.log(this.avgScore);
+			};
+			this.setAvgScore = function(point){
+				this.avgScore  = point;
+			};
+			this.changeAddress = function(address){
+				this.address 		 = address;
+			};
+		}
+		let study = new Student1('Nam', 'nam03@gmail.com', 'image', 'HaNoi', 8);
+		// console.log(study);
+		// study.getAvgScore();
+		// study.setAvgScore(12);
+		// study.getAvgScore();
+		// console.log(study);
+		// bài 2
+		let student2 = {
+			name: 'Nhi',
+			age: 18,
+			address: 'Đà Nẵng',
+			subjects: [
+				{ name: 'Javascript', point: 9},
+				{ name: 'Php', point: 8.6}
+			],
+		};
+		let name            = document.getElementById('student_name');
+		let age             = document.getElementById('student_age');
+		let address         = document.getElementById('student_address');
+		let subjects				= document.getElementById('subjects');
+		let addSubject			= document.getElementById('add-subject');
+		name.textContent    = student2.name;
+		age.textContent     = student2.age;
+		address.textContent = student2.address;
+		for (var item in student2.subjects) {
+			let node = document.createElement('li')
+			node.setAttribute('class','user_item');
+			node.textContent = student2.subjects[item].name + "  - " + student2.subjects[item].point;
+			subjects.appendChild(node);
+		}
+		addSubject.onclick = function(){
+			let name = document.getElementById('name').value;
+			let point = document.getElementById('point').value;
+			let node = document.createElement('li');
+			node.setAttribute('class','user_item');
+			node.textContent = name + ' - '+point;
+			subjects.appendChild(node);
+		}
+		//  Bài 3
+		function Subject(name, teacher, point, year){
+			this.name    = name;
+			this.teacher = teacher;
+			this.point   = point;
+			this.year    = year;
+			this.getSubject = function(){
+				return this.name + ' - ' + this.teacher+ ' - '+ this.point + ' - '+ this.year;
+			}
+		}
+		function Student(name, age, address, phone, birthday){
+			this.name     = name;
+			this.age      = age;
+			this.address  = address;
+			this.phone    = phone;
+			this.birthday = birthday;
+			this.subjects = new Subject('Dinh', 1, 6, 2012);
+			this.Subjects = function(name){
+				return console.log(this.avgScore);
+			};
+		}
+		let student_test = new Student();
+		let sub = student_test.subjects.getSubject();
+		// console.log(sub);
+		// bài 4
+		// function Person(name, age, address){
+		// 	this.name = name;
+		// 	this.age = age;
+		// 	this.address = address;
+		// 	this.showProfile = function(){
+		// 		return console.log(this.name+ ' - '+ this.age+ ' - '+ this.address);
+		// 	}
+		// }
+		let Person = {
+			name: 'Nguyen Van A',
+			age: 24,
+			address: 'Da Nang',
+			showProfile: function(){
+				return '<h3> '+this.name+ ' - '+ this.age+ ' - '+ this.address+'</h3> ';
+			},
+		}
+		let show = document.getElementById('show-profile');
+		show.onclick = function(){
+			let name1 = document.getElementById('name1').value;
+			let age1 = document.getElementById('age1').value;
+			let address1 = document.getElementById('address1').value;
+			let name2 = document.getElementById('name2').value;
+			let age2 = document.getElementById('age2').value;
+			let address2 = document.getElementById('address2').value;
+			if(name1 === '' || age1 === '' || address1 === ''||name2 === '' || age2 === '' || address2 === ''){
+				alert('Yêu cầu nhập đầy đủ thông tin');
+				return false;
+			}
+			let person1 = {
+				__proto__ : Person
+			};
+			person1.name = name1;
+			person1.age  = age1;
+			person1.address = address1;
+			let person2 = {
+				__proto__ : Person
+			};
+			person2.name = name2;
+			person2.age  = age2;
+			person2.address = address2;
+			let showcontent			= document.getElementById('content-profile');
+			showcontent.innerHTML = person1.showProfile() +person2.showProfile();
+			// let person3 = new Person('Nguyen Danh Tien',25, 'Da Nang');
+			// person3.showProfile();
+
+		}
+	</script>
+	
+
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+	<title>Tienndpd03947_lab2_web2601</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+	<style type="text/css">
+		#target{
+			width: 50px;
+			height: 50px;
+			background-color: #33691e;
+		}
+		#txtkeyup{
+			color: #ff0000;
+		}
+		.user_item{
+			cursor: pointer;
+			/* text-decoration: underline; */
+			color: green;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<h3>Bài 1</h3>
+		<div class="mb-3 row">
+	    <label for="string" class="col-sm-2 col-form-label">String</label>
+	    <div class="col-sm-8">
+	      <input type="text" class="form-control" id="string">
+	    </div>
+	    <div class="col-sm-2">
+			  <button type="button" class="btn btn-success ml-3" id='count'> Count</button>
+			</div>
+	  </div>
+	  <h3 id="result-count" class='user_item'></h3>
+	  
+		<h3>Bài 2</h3>
+		<div class="mb-3 row">
+	    <label for="string" class="col-sm-2 col-form-label">String2</label>
+	    <div class="col-sm-10">
+	      <input type="text" class="form-control" id="string2">
+	    </div>
+	  </div>
+	  <div class="mb-3 row">
+	    <label for="number" class="col-sm-2 col-form-label">Number</label>
+	    <div class="col-sm-10">
+	      <input type="number" min="0" class="form-control" id="number">
+	    </div>
+	  </div>
+	  <div class="mb-3 row">
+		  <button type="button" class="btn btn-success ml-3" id='convert'> Convert</button>
+		</div>
+		<h3 id="result-convert" class='user_item'></h3>
+		<h3>Bài 3</h3>
+		<div class="mb-3 row">
+	    <label for="string" class="col-sm-2 col-form-label">String3</label>
+	    <div class="col-sm-10">
+	      <input type="text" class="form-control" id="txt">
+	    </div>
+	  </div>
+	  <div class="mb-3 row">
+		  <button type="button" class="btn btn-success ml-3" id='camel-case'> Convert</button>
+		</div>
+		<h3 id="result-camel-case" class='user_item'></h3>
+		<h3>Bài 4</h3>
+		<div class="mb-3 row">
+	    <label for="email" class="col-sm-2 col-form-label">Email</label>
+	    <div class="col-sm-10">
+	      <input type="text" class="form-control" id="email">
+	    </div>
+	  </div>
+	  <div class="mb-3 row">
+		  <button type="button" class="btn btn-success ml-3" id='check-email'> Check </button>
+		</div>
+		<h3 id="result-email" class='user_item'></h3>
+	<!-- <script type="text/javascript" src="https://momentjs.com/downloads/moment.js"></script> -->
+	<script type="text/javascript">
+		// Bài 1
+		let btnCount = document.getElementById('count');
+		btnCount.onclick = function(){
+			let string = document.querySelector('#string').value;
+			let showCount = document.getElementById('result-count');
+			showCount.textContent = string.length;
+		}
+		// Bài 2
+		let btnConvert = document.getElementById('convert');
+		btnConvert.onclick = function(){
+			let string = document.querySelector('#string2').value;
+			let number = document.querySelector('#number').value;
+			let showConvert = document.getElementById('result-convert');
+			let resultConvert = '';
+			if(Number(number) == string.length){
+				showConvert.textContent = string + '.';
+			}
+			if(Number(number) < string.length){
+				showConvert.textContent = string.substr(0,Number(number))+ '...';
+			}
+		}
+		// Bài 3
+		let btnCamelCase = document.getElementById('camel-case');
+		btnCamelCase.onclick = function(){
+			let str = document.getElementById('txt').value;
+			let patt = /\W+(.)/g;
+			let result = str.toLowerCase().replace(/\W+(.)/g,function(word, index) {
+				console.log(word);
+		    return index === 0 ? word.toLowerCase() : word.toUpperCase();
+		  }).replace(/\W+/g, '');
+
+			let showCamelCase = document.getElementById('result-camel-case');
+			showCamelCase.textContent = result;
+		}
+		// bài 4
+		let btnCheckEmail = document.getElementById('check-email');
+		btnCheckEmail.onclick = function(){
+			let email = document.getElementById('email').value;
+			let patt = /^[a-z][a-z0-9_\.]{5,32}/;
+			// [a-z0-9]{2,}(\.[a-z0-9]{2,4}){1,2}
+			let result ='' ;
+
+			let resultEmail = document.getElementById('result-email');
+			resultEmail.textContent = result;
+		}
+	</script>
+	
+
+</body>
+</html>

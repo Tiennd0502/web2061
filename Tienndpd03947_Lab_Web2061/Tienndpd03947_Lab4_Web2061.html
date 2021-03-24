@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+	<title>Tienndpd03947_lab4_web2601</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+	<style type="text/css">
+		#target{
+			width: 150px;
+			height: 150px;
+			background-color: #33691e;
+		}
+		#txtkeyup{
+			color: #ff0000;
+		}
+		.user_item{
+			cursor: pointer;
+			/* text-decoration: underline; */
+			color: green;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<form action="" autocomplete="off">
+			<h3>Bài 1</h3>
+			<div class="mb-3 row">
+		    <label for="weight" class="col-sm-2 col-form-label">Cân Nặng(Kg)</label>
+		    <div class="col-sm-10">
+		      <input type="number" class="form-control" id="weight">
+		    </div>
+		  </div>
+		  <div class="mb-3 row">
+		    <label for="height" class="col-sm-2 col-form-label">Chiều cao(Cm)</label>
+		    <div class="col-sm-10">
+		      <input type="number" min="0" class="form-control" id="height">
+		    </div>
+		  </div>
+		  <div class="mb-3 row">
+			  <button type="button" class="btn btn-success ml-3" id='show-bmi'> Enter</button>
+			</div>
+		</form>
+		<div class="ml-5">
+			<h2>Chỉ số BMI của bạn là:</h2>
+			<h3 id="result-bmi" class='user_item'></h3>
+		</div>
+		<h3>Bài 2</h3>
+		<div id="target"></div>
+		<div class="mb-3 row mt-2">
+		  <button type="button" class="btn btn-success ml-3" id='change-color'> Change color</button>
+		</div>
+		<h3>Bài 3</h3>
+		<div class="mb-3 row">
+	    <label for="name" class="col-sm-2 col-form-label">Nhập tên</label>
+	    <div class="col-sm-10">
+	      <input type="text" class="form-control" id="name">
+	    </div>
+	  </div>
+	  <div class="mb-3 row">
+		  <button type="button" class="btn btn-success ml-3" id='add-name'> Enter</button>
+		</div>
+		<ul id='list-name'>
+			
+		</ul>
+	<!-- <script type="text/javascript" src="https://momentjs.com/downloads/moment.js"></script> -->
+	<script type="text/javascript">
+		// Bài 1
+		let btnBMI = document.getElementById('show-bmi');
+		btnBMI.onclick = function(){
+			let weight = document.getElementById('weight').value;
+			let height = document.getElementById('height').value;
+			let result = document.getElementById('result-bmi');
+			result.textContent = Number(weight) / Math.pow(Number(height), 2 );
+		}
+		// bài 2
+		function randomColor() { 
+		  return '#' + Math.floor(Math.random()*16777215).toString(16); 
+		}
+		let btnColor = document.getElementById('change-color');
+		btnColor.onclick = function(){
+			let target = document.getElementById('target');
+			target.style.backgroundColor = randomColor();
+		}
+		//  Bài 3
+		let listName = [];
+		let btnAddName = document.getElementById('add-name');
+		btnAddName.onclick = function(){
+			let name = document.getElementById('name').value;
+			let list = document.getElementById('list-name');
+			listName.push(name);
+			listName.sort();
+			let content = '';
+			listName.forEach(function(currentValue, index, array){
+				content += '<li class="user_item">'+ currentValue +'</li>'; 
+			})
+			list.innerHTML = content;
+		}
+		
+	</script>
+	
+
+</body>
+</html>

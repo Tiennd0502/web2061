@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+	<title>Tienndpd03947_lab5_web2601</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+	<style type="text/css">
+		#target{
+			width: 150px;
+			height: 150px;
+			background-color: #33691e;
+		}
+		#txtkeyup{
+			color: #ff0000;
+		}
+		.user_item{
+			cursor: pointer;
+			/* text-decoration: underline; */
+			color: green;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+	</div>
+	<!-- <script type="text/javascript" src="https://momentjs.com/downloads/moment.js"></script> -->
+	<script type="text/javascript">
+		// Bài 1 Callback hell
+		function GetUp(){
+			console.log('B1. Đã thức dậy');
+			BrushTeeth();
+		}
+		function BrushTeeth(){
+			console.log('B2. Đang đánh răng');
+			setTimeout(function(){
+				console.log('Đã đánh răng !');
+				ChangeClothes();
+			},2000);
+		}
+		function ChangeClothes(){
+			console.log('B3. Đang thay áo quần');
+			setTimeout(function(){
+				console.log('Đã thay áo quần !');
+				GoToSchool();
+			},3000);
+		}
+		function GoToSchool(){
+			console.log('B4. Đang đi học');
+			setTimeout(function(){
+				console.log('Đã đến trường !');
+			},4000);
+		}
+		// (function Action(){
+		// 	GetUp();
+		// }());
+		// bài 2
+		let promise = new Promise(function(resolve, reject){
+			console.log('B1. Đã thức dậy');
+			console.log('B2. Đang đánh răng');
+			return resolve();
+		});
+		// console.log(promise);
+		promise.then(function(){
+			return new Promise(function(resolve, reject){
+				setTimeout(function(){
+					console.log('Đã đánh răng!');
+					console.log('B3. Đang thay áo quần');
+					return resolve();
+				},2000);
+			});
+		}).then(function(){
+			return new Promise(function(resolve, reject){
+				setTimeout(function(){
+					console.log('Đã thay áo quần !');
+					console.log('B4. Đang đi học');
+					return resolve();
+				},3000);
+			});
+		}).then(function(){
+			return new Promise(function(resolve, reject){
+				setTimeout(function(){
+					console.log('Đã đến trường !');
+				},4000);
+			});
+		})
+		// Bài 3
+		//sai thứ tự input
+		// function SetName(){
+		// 	return new Promise(function(resolve){
+		// 		var name = prompt('Nhập họ và tên sinh viên');
+		// 		return resolve(name);
+		// 	})
+		// }
+		// function SetTitle(){
+		// 	return new Promise(function(resolve){
+		// 		var title = prompt('Nhập tên môn học đang được học (chỉ nhập 1 môn)');
+		// 		return resolve(title);
+		// 	})
+		// }
+		// function SetLab1(){
+		// 	return new Promise(function(resolve, reject){
+		// 		var lab1 = prompt('Nhập điểm lab1');
+		// 		return resolve(Number(lab1)/10);
+		// 	});
+		// }
+		// function SetLab2(){
+		// 	return new Promise(function(resolve, reject){
+		// 		setTimeout(function(){
+		// 			var lab2 = prompt('Nhập điểm lab2');
+		// 			return resolve(Number(lab2)*2/10);
+		// 		},3000);
+		// 	});
+		// }
+		// function SetLab3(){
+		// 	return new Promise(function(resolve, reject){
+		// 		setTimeout(function(){
+		// 			var lab3 = prompt('Nhập điểm lab3');
+		// 			return resolve(Number(lab3)*3/10);
+		// 		},4000);
+		// 	});
+		// }
+		// function SetFinal(){
+		// 	return new Promise(function(resolve, reject){
+		// 		setTimeout(function(){
+		// 			var final = prompt('Nhập điểm final');
+		// 			return resolve(Number(final)*4/10);
+		// 		},3000);
+		// 	});
+		// }
+		// Promise.all([
+		// 	SetName(),
+		// 	SetTitle(),
+		// 	SetLab1(),
+		// 	SetLab2(),
+		// 	SetLab3(),
+		// 	SetFinal()
+		// ])
+		// .then(function(result){
+		// 	return new Promise(function(resolve, reject){
+		// 		let avg ;
+		// 		result.forEach(function(currentValue, index, array){
+		// 			if(index > 1){
+		// 				avg += currentValue;
+		// 			}
+		// 		});
+		// 		if(avg < 5){
+		// 			return alert('Học lực Yếu');
+		// 		}else if(avg < 7){
+		// 			return alert('Học lực Trung Bình');
+		// 		}else if(avg < 8.5){
+		// 			return alert('Học lực Khá');
+		// 		}else{
+		// 			return alert('Học lực Giỏi');
+		// 		}
+		// 	});
+		// });
+		//  Cách khác
+		let result = [];
+		let resultAvg = new Promise(function(resolve, reject){
+			result.push(prompt('Nhập họ và tên sinh viên'));
+			result.push(prompt('Nhập tên môn học đang được học (chỉ nhập 1 môn)'));
+			let lab1 = prompt('Nhập điểm lab1');
+			result.push(Number(lab1)/10);
+			return resolve();
+		});
+		resultAvg.then(function Lab2(){
+			return new Promise(function(resolve, reject){
+				setTimeout(function(){
+					let lab2 = prompt('Nhập điểm lab2');
+					result.push(Number(lab2)*2/10);
+					return resolve();
+				},3000);
+			});
+		}).then(function Lab3(){
+			return new Promise(function(resolve, reject){
+				setTimeout(function(){
+					let lab3 = prompt('Nhập điểm lab3');
+					result.push(Number(lab3)*3/10);
+					return resolve();
+				},3000);
+			});
+		}).then(function Final(){
+			return new Promise(function(resolve, reject){
+				setTimeout(function(){
+					let final = prompt('Nhập điểm Final');
+					result.push(Number(final)*4/10);
+					return resolve();
+				},3000);
+			});
+		}).then(function Avg(){
+			return new Promise(function(resolve, reject){
+				let avg ;
+				result.forEach(function(currentValue, index, array){
+					if(index > 1){
+						avg += currentValue;
+					}
+				});
+				alert('Điểm trung bình là: '+ avg);
+				if(avg < 5){
+					return alert('Học lực Yếu');
+				}else if(avg < 7){
+					return alert('Học lực Trung Bình');
+				}else if(avg < 8.5){
+					return alert('Học lực Khá');
+				}else{
+					return alert('Học lực Giỏi');
+				}
+			});
+		})
+	</script>
+
+</body>
+</html>

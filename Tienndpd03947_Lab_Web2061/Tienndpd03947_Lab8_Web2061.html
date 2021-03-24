@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+	<title>Tienndpd03947_lab8_web2601</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+	<style type="text/css">
+		#target{
+			width: 150px;
+			height: 150px;
+			background-color: #33691e;
+		}
+		#txtkeyup{
+			color: #ff0000;
+		}
+		.user_item{
+			cursor: pointer;
+			/* text-decoration: underline; */
+			color: green;
+		}
+		.error{
+			color: red;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<h3>Bài1</h3>
+		<div class="mt-2">
+			<p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Placeat cum qui maiores corrupti autem sapiente, culpa corporis, dolor id distinctio repudiandae molestias, blanditiis repellat repellendus doloribus non voluptatem animi reprehenderit.</p>
+			<p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Placeat cum qui maiores corrupti autem sapiente, culpa corporis, dolor id distinctio repudiandae molestias, blanditiis repellat repellendus doloribus non voluptatem animi reprehenderit.</p>
+			<p id='line1'>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Placeat cum qui maiores corrupti autem sapiente, culpa corporis, dolor id distinctio repudiandae molestias, blanditiis repellat repellendus doloribus non voluptatem animi reprehenderit.</p>
+			<p class="line2">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Placeat cum qui maiores corrupti autem sapiente, culpa corporis, dolor id distinctio repudiandae molestias, blanditiis repellat repellendus doloribus non voluptatem animi reprehenderit.</p>
+			<p line-count="line3">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Placeat cum qui maiores corrupti autem sapiente, culpa corporis, dolor id distinctio repudiandae molestias, blanditiis repellat repellendus doloribus non voluptatem animi reprehenderit.</p>
+			<p selectedLine>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Placeat cum qui maiores corrupti autem sapiente, culpa corporis, dolor id distinctio repudiandae molestias, blanditiis repellat repellendus doloribus non voluptatem animi reprehenderit.</p>
+			<ul> 
+		    <li>li 1</li> 
+		    <li>li 2</li> 
+		    <li>li 3</li> 
+		    <li>li 4</li> 
+		    <li>li 5</li> 
+		  </ul>
+		</div>
+		<h3>Bài 2</h3>
+		<table class="table table-dark table-striped">
+	    <thead>
+	      <tr>
+	        <th>Id</th>
+	        <th>Email</th>
+	        <th>First Name</th>
+	        <th>Last Name</th>
+	        <th>Avatar</th>
+	      </tr>
+	    </thead>
+	    <tbody id='tbody1'>
+	      
+	    </tbody>
+	  </table>
+		<h3>Bài 3</h3>
+		<table class="table table-dark table-striped">
+	    <thead>
+	      <tr>
+	        <th>id</th>
+	        <th>Name</th>
+	        <th>Year</th>
+	        <th>Color</th>
+	        <th>Pantone Value</th>
+	      </tr>
+	    </thead>
+	    <tbody id='tbody2'>
+	      
+	    </tbody>
+	  </table>
+	  <h3>Bài 4</h3>
+	  <form action="#" method="get" class="mb-5"> 
+	    Product name: <input type="text" name="name" id='name'> 
+	    <span class="error" id="nameErr"></span> 
+	    <br> 
+	    Year: <input type="text" name="year" id='year'> 
+	    <span class="error" id="yearErr"></span> 
+	    <br> 
+	    Color: <input type="color" name="color" id='color'> 
+	    <span class="error" id="colorErr"></span> 
+	    <br> 
+	    Pantone value: <input type="text" name="pantone_value" id='pantone_value'> 
+	    <span class="error" id="pantoneErr"></span> 
+	    <br> 
+	    <button type="button" id='add-prd'>Submit</button> 
+	</form> 
+	</div>
+	<script type="text/javascript" src="jquery-3.5.0.min.js"></script>
+	<script type="text/javascript">
+		(function(){
+			// Bài 1
+			$('li:first').css('background','#E35D1B');
+			$('#line1 + *').css('color','#ff0000');
+			$('p[selectedLine]').prev().css('background','#12EB54');
+			$('li').css('color','#D610BC');
+			// Bài 2
+
+			let url = 'https://reqres.in/api/users?page=1&per_page=5 ';
+			// cách 1
+			// fetch(url,{
+			// 	method: 'GET'
+			// }).then(function (response) {
+			// 	return response.json();
+			// }).then(function(data){
+			// 	data = data.data;
+			// 	// console.log(data);
+			// 	let content = '';
+			// 	for (user of data) {
+			// 		content += `<tr>
+			// 					        <td>${user.id}</td>
+			// 					        <td>${user.email}</td>
+			// 					        <td>${user.first_name}</td>
+			// 					        <td>${user.last_name}</td>
+			// 					        <td>${user.avatar}</td>
+			// 					      </tr>`;
+			// 	}
+			// 	$('#tbody1').html(content);
+			// })
+			// Cách 2
+			$.ajax({
+				url: 'https://reqres.in/api/users?page=1&per_page=5',
+				type: 'GET',
+				dataType: 'json',
+				data: {},
+			})
+			.done(function(data) {
+				data = data.data;
+				let content = '';
+				for (user of data) {
+					content += `<tr>
+								        <td>${user.id}</td>
+								        <td>${user.email}</td>
+								        <td>${user.first_name}</td>
+								        <td>${user.last_name}</td>
+								        <td>${user.avatar}</td>
+								      </tr>`;
+				}
+				$('#tbody1').html(content);
+			})
+			.fail(function() {
+				console.log("error");
+			})
+			.always(function() {
+				console.log("complete");
+			});
+			//  Bài 3
+			$.ajax({
+				url: ' https://reqres.in/api/products?page=1&per_page=5',
+				type: 'GET',
+				dataType: 'json',
+				data: {},
+			})
+			.done(function(data) {
+				data = data.data;
+				let content = '';
+				for (product of data) {
+					content += `<tr>
+								        <td>${product.id}</td>
+								        <td>${product.name}</td>
+								        <td>${product.year}</td>
+								        <td>${product.color}</td>
+								        <td>${product.pantone_value}</td>
+								      </tr>`;
+				}
+				$('#tbody2').html(content);
+			})
+			.fail(function() {
+				console.log("error");
+			})
+			.always(function() {
+				console.log("complete");
+			});
+			// Bài 4
+			$('#add-prd').click(function(event) {
+				let name = $.trim($('#name').val());
+				let year = $.trim($('#year').val());
+				let color = $('#color').val();
+				let pantone = $.trim($('#pantone_value').val());
+				let check = true;
+				if(name.length == ''){
+					$('#nameErr').text('Name không được để trống!');
+					check = false;
+				}else if (name.length > 30) {
+					$('#nameErr').text('Name không được quá 30 ký tự!!');
+					check = false;
+				}else {
+					$('#nameErr').text('');
+				}
+				if(year.length == ''){
+					$('#yearErr').text('Năm không được để trống!');
+					check = false;
+				}else if(year.length != 4){
+					$('#yearErr').text('Phải là 4 kí tự!');
+					check = false;
+				}else{
+					let patt = /\D/g;
+					if(patt.test(year)){
+						$('#yearErr').text('Phải là kí tự số!');
+						check = false;
+					}else{
+						if(year[0] == 0){
+							$('#yearErr').text('Số không được bắt đầu bằng số 0 !');
+							check = false;
+					check = false;
+						}else{
+							$('#yearErr').text('');
+						}
+					}
+				}
+				if(pantone.length == ''){
+					$('#pantoneErr').text('Pantone value không được để trống!');
+					check = false;
+				}else {
+					let patt = /^\d{2}-\d{4}$/;
+					if(patt.test(pantone)){
+						$('#pantoneErr').text('');
+					}else{
+						$('#pantoneErr').text('Nhập đúng định dạng vd: 23-2345');
+						check = false;
+					}
+				}
+				if(check){
+					$.post('https://reqres.in/api/products', 
+									{
+										name: name,
+										year: year,
+										color: color,
+										pantone_value: pantone,
+									}, 
+									function(data, textStatus, xhr) {
+										// console.log(data);
+										// console.log(textStatus);
+										// console.log(xhr);
+										if(xhr.readyState != 4){
+											alert('có lỗi');
+										}else {
+											alert('Tạo sản phẩm thành công!');
+											$('#yearErr').text('');
+											$('#nameErr').text('');
+											$('#pantoneErr').text('');
+										}
+									}
+					);
+				}
+			});
+			
+		})()
+	</script>
+</body>
+</html>
