@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+	<title>Tienndpd03947_lab6_web2601</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+	<style type="text/css">
+		/* #target{
+			width: 150px;
+			height: 150px;
+			background-color: #33691e;
+		} */
+		#txtkeyup{
+			color: #ff0000;
+		}
+		.user_item{
+			cursor: pointer;
+			/* text-decoration: underline; */
+			color: green;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<h3>Bài2</h3>
+		<div class="mt-2" id='target'></div>
+		<ul id='list-name'></ul>
+		<h3 class="mt-3">Bài3</h3>
+		<div class="mt-3" id='read-data'></div>
+		<h3 class="mt-3">Bài 4</h3>
+		<div class="mt-2" ></div>
+		<ul id='list-data'></ul>
+	</div>
+	<!-- <script type="text/javascript" src="https://momentjs.com/downloads/moment.js"></script> -->
+	<script type="text/javascript">
+		// Bài 1 Create json data
+		let products = [
+				{'id': 30, 'name': 'Deven Carrol DDS', 'cate_id': 3, 'price': 2000},
+				{'id': 31, 'name': 'Avals Olson', 'cate_id': 4, 'price': 6000},
+				{'id': 32, 'name': 'David Khame', 'cate_id': 3, 'price': 3000},
+				{'id': 33, 'name': 'Javies Sipeir', 'cate_id': 3, 'price': 5500},
+				{'id': 34, 'name': 'Unique Trump', 'cate_id': 7, 'price': 4000},
+				{'id': 35, 'name': 'Samir Churmpe', 'cate_id': 1, 'price': 1500},
+
+		];
+		// bài 2
+		let target = document.getElementById('target');
+		let listName = document.getElementById('list-name');
+		let content = '';
+		new Promise(function(resolve, reject){
+			products.forEach(function(currentValue, index, array){
+				content += '<li class="user_item">'+ currentValue.name +'</li>';
+			});
+			return resolve(content);
+		}).then(function ShowContent(data) {
+			listName.innerHTML = data;
+		})
+		//  Bài 3
+		// Cách 1
+		// function LoadData (url, method) {
+		// 	let xmlHttp;
+		// 	if(window.XMLHttpRequest){
+		// 		xmlHttp = new XMLHttpRequest();
+		// 	}else {
+		// 		xmlHttp = new ActiveXObject('Microsoft.XMLHTTP');
+		// 	}
+		// 	xmlHttp.onreadystatechange = function(){
+		// 		if(xmlHttp.readyState == 4 && xmlHttp.status ==200){
+		// 			let viewData = document.getElementById('read-data');
+		// 			viewData.textContent = xmlHttp.responseText;
+		// 			let data = JSON.parse(xmlHttp.responseText).data;
+		// 			console.log(xmlHttp.responseText);
+		// 			let content = '';
+		// 			let listData = document.getElementById('list-data');
+		// 			data.forEach(function(currentValue, index, array){
+		// 				content += '<li class="user_item">'+ currentValue.id+ ' --- '+ currentValue.first_name + " " +currentValue.first_name+'</li>';
+		// 			});
+		// 			listData.innerHTML = content;
+		// 		}
+		// 	}
+		// 	xmlHttp.open(method, url, true);
+		// 	xmlHttp.send();
+			
+		// }
+		// let url = "https://reqres.in/api/users?page=1&per_page=5";
+		// LoadData(url, 'GET');
+		// Cách 2
+		let url = "https://reqres.in/api/users?page=1&per_page=5";
+		fetch(url,{
+			method: 'GET'
+		}).then(function(response){
+			return response.json();
+		}).then(function (data) {
+			console.log(data);
+			data = data.data;
+			// console.log(data);
+			let content = '';
+			let listData = document.getElementById('list-data');
+			data.forEach(function(currentValue, index, array){
+				content += '<li class="user_item">'+ currentValue.id+ ' --- '+ currentValue.first_name + " " +currentValue.first_name+'</li>';
+			});
+			listData.innerHTML = content;
+		});
+
+	</script>
+	<script type="text/javascript" src="jquery-3.5.0.min.js"></script>
+	<!-- <script type="text/javascript">
+		(function(){
+			$.ajax({
+				url: 'https://reqres.in/api/users?page=1&per_page=5',
+				type: 'GET',
+				dataType: 'json,',
+				data: {},
+			})
+			.done(function() {
+				// console.log("success");
+			})
+			.fail(function() {
+				// console.log("error");
+			})
+			.always(function(data) {
+				// console.log(typeof(data));
+				// console.log(data.responseText);
+				// console.log(typeof(data.responseText));
+				let result = data.responseText;
+				result = JSON.parse(result).data;
+				// console.log(result);
+				let listData = document.getElementById('list-data');
+				let content = '';
+				for (var item of result) {
+					// console.log(`${item.first_name}`);
+					content += `<li class="user_item"> ${item.id} --- ${item.first_name} ${item.first_name} </li>`;
+				}
+				listData.innerHTML = content;
+			});
+			
+		})()
+	</script> -->
+</body>
+</html>
